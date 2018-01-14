@@ -2,7 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const searchRoutes = require('./routes/searchRoutes');
+
 const app = express();
+app.use(bodyParser.json());
+
+searchRoutes(app);
 
 // configures so that the server behaves correctly in production
 if (process.env.NODE_ENV === 'production') {
@@ -22,4 +27,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log('Server started successfully');
 });
-
