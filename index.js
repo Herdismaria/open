@@ -2,7 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+require('./models/Place');
+
 const searchRoutes = require('./routes/searchRoutes');
+const keys = require('./config/keys');
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 app.use(bodyParser.json());
