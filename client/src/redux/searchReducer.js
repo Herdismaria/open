@@ -57,14 +57,14 @@ export default function search(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        error: err,
+        error: action.err,
       };
     case FETCHING_SUGGESTIONS_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: '',
-        suggestions: results.filter(result =>
+        suggestions: state.results.filter(result =>
           result.main_text.toLowerCase().startsWith(action.query)
         ),
       };
