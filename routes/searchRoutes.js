@@ -6,19 +6,24 @@ const Place = mongoose.model('place');
 
 module.exports = app => {
   app.get('/search/predictions', async (req, res) => {
-    const input = req.query.input;
+    const value = req.query.value;
 
-    if (!input) {
+    if (!value) {
       res.status(400).send('You need to provide search string');
     }
 
-    const uri = `${constants.BASE_URI_AUTOCOMPLETE}${input}&key=${
-      keys.googlePlacesKey
-    }`;
-
+    const uri = encodeURI(
+      `${constants.BASE_URI_AUTOCOMPLETE}${value}&key=${keys.googlePlacesKey}`
+    );
     try {
       const predictions = await axios.get(uri);
-      res.send(predictions.data);
+      const places = predictions.data.predictions.map(des => ({
+        title: des.structured_formatting.main_text,
+        id: des.place_id,
+        description: des.description,
+        childKey: des.place_id,
+      }));
+      res.send(places);
     } catch (err) {
       res.send(err);
     }

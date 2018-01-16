@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import { Container } from 'semantic-ui-react';
 import './App.css';
+import SearchBox from '../search/SearchBox';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Container textAlign="center" className="App">
+        <SearchBox />
+      </Container>
     );
   }
 }
