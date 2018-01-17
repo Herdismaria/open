@@ -11,7 +11,6 @@ export const fetchingResults = () => ({
   type: FETCHING_RESULTS,
 });
 
-// results: [prediction, prediction, prediction]
 export const fetchingResultsSuccess = results => ({
   type: FETCHING_RESULTS_SUCCESS,
   results,

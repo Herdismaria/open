@@ -1,26 +1,27 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Search, Grid } from 'semantic-ui-react';
-import * as actions from '../../redux/searchReducer';
+import * as searchActions from '../../redux/searchReducer';
+import * as placesActions from '../../redux/placesReducer';
+import './Search.css';
 
 import React from 'react';
 const ENTER_KEY_CODE = 13;
 
-const IngredientsSearchResult = ({ id, title }) => {
-  return (
-    <div key={id}>
-      <div className="main">
-        <div className="title">{title}</div>
-      </div>
+const IngredientsSearchResult = ({ id, title }) => (
+  <div key={id}>
+    <div className="main">
+      <div className="title">{title}</div>
     </div>
-  );
-};
+  </div>
+);
 
 class SearchBox extends React.Component {
   componentWillMount() {
     this.timer = null;
   }
 
+  // set timeout so that http request is only sent when the user has stopped writing
   handleSearchChange = (e, { value }) => {
     clearTimeout(this.timer);
 
@@ -31,6 +32,7 @@ class SearchBox extends React.Component {
     }, 500);
   };
 
+  // get autocomplete suggestions, if no characters, reset state
   calculateSuggestions = value => {
     const { resetSearch, getResults } = this.props;
     if (value.length === 0) {
@@ -41,30 +43,27 @@ class SearchBox extends React.Component {
   };
 
   handleResultSelect = (e, { result }) => {
-    const { updateSearchValue } = this.props;
+    const { updateSearchValue, setPlace, fetchPlace } = this.props;
     updateSearchValue(result.title);
-  };
-  onKeyDown = (e, data) => {
-    if (e.keyCode !== ENTER_KEY_CODE) {
-      return;
-    }
+    setPlace(result);
+    fetchPlace();
   };
 
   render() {
     const { isLoading, results, value } = this.props.search;
     return (
-      <Grid>
-        <Grid.Column width={8}>
+      <Grid container stretched>
+        <Grid.Column>
           <Search
-            fluid
-            size="huge"
+            input="text"
+            size="large"
+            selectFirstResult
             loading={isLoading}
             onSearchChange={this.handleSearchChange}
             onResultSelect={this.handleResultSelect}
             results={results}
             value={value}
             resultRenderer={IngredientsSearchResult}
-            onKeyDown={this.onKeyDown}
           />
         </Grid.Column>
       </Grid>
@@ -72,9 +71,12 @@ class SearchBox extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({ search: state.search });
+const mapStateToProps = (state, props) => ({
+  search: state.search,
+  places: state.places,
+});
 
 const mapDispatchToProps = (dispatch, props) =>
-  bindActionCreators({ ...actions }, dispatch);
+  bindActionCreators({ ...placesActions, ...searchActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);
