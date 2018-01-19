@@ -1,5 +1,7 @@
 .ui.input {
   width: 90% !important;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
 }
 
 .ui.large.search {
@@ -9,9 +11,15 @@
 @media (min-width: 480px) {
   .ui.input {
     width: 60% !important;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
   }
 
   .ui.large.search {
     padding-top: 8em;
   }
+
+  /*.ui.large.focus.search .ui.input {
+    width: 60% !important;
+  }*/
 }

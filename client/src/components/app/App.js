@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import React from 'react';
 import './App.css';
-import SearchBox from '../search/SearchBox';
+import Input from '../search/Input';
+import CardGrid from '../cards/CardsGrid';
+import styled from 'styled-components';
 
-class App extends Component {
-  render() {
-    return (
-      <Container textAlign="center" className="App">
-        <SearchBox />
-      </Container>
-    );
-  }
-}
+const Wrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 80%;
+  margin: 0 auto;
+  height: 100vh;
+  justify-content: center;
+`;
+
+const App = () => (
+  <Wrapper>
+    <Input />
+    <CardGrid />
+  </Wrapper>
+);
 
 export default App;
