@@ -25,13 +25,13 @@ export const setPlace = result => ({
   result,
 });
 
-export const fetchPlace = () => async (dispatch, getState) => {
+/*export const fetchPlace = id => async (dispatch, getState) => {
   dispatch(fetchingPlace());
-  const { place } = getState().places;
-  const URI = encodeURI(`/search/places?id=${place.id}`);
+  const URI = encodeURI(`/search/places?id=${id}`);
+  console.log(URI);
   const res = await axios.get(URI);
-  console.log(res);
-};
+  //console.log(res);
+};*/
 
 const initialState = {
   place: {},

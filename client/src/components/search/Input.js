@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 20%;
+  padding-top: 200px;
 `;
 
 const StyledInput = styled.input`
@@ -30,7 +31,7 @@ const StyledInput = styled.input`
   }
 
   ${media.phone`
-    width: 300px;`};
+    width: 90%;`};
 `;
 
 const SearchIcon = styled.span`
@@ -62,6 +63,7 @@ class Input extends React.Component {
 
   // get autocomplete suggestions, if no characters, reset state
   calculateSuggestions = value => {
+    const input = this.input;
     const { resetSearch, getResults } = this.props;
     if (value.length === 0) {
       resetSearch();
@@ -79,7 +81,11 @@ class Input extends React.Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper
+        innerRef={input => {
+          this.input = input;
+        }}
+      >
         <StyledInput onChange={this.handleSearchChange} />
         <SearchIcon className="fa fa-search" />
       </Wrapper>

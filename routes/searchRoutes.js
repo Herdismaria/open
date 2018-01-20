@@ -39,7 +39,7 @@ module.exports = app => {
     try {
       const response = await axios.get(uri);
       const place = factories.placeFactory(response.data.result);
-      res.send(factories.placeFactory(place));
+      res.send(place);
     } catch (err) {
       res.send(err);
     }
