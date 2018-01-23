@@ -15,6 +15,7 @@ const Card = styled(Link)`
   align-items: center;
   justify-content: center;
   flex: 0 0 60%;
+  flex-direction: column;
   height: 100px;
   margin: 5px;
   text-decoration: none;
@@ -22,7 +23,7 @@ const Card = styled(Link)`
 
   ${media.phone`
     flex: 0 0 100%;
-    height: 80px`};
+    height: 90px`};
 `;
 
 const Title = styled.h3`
@@ -30,9 +31,26 @@ const Title = styled.h3`
   font-family: 'Dosis', sans-serif;
   font-size: 20px;
   letter-spacing: 3px;
+
+  ${media.phone`
+    word-wrap: break-word;
+    margin-bottom: 0;
+    padding-bottom: 0;`};
 `;
 
-const SimpleCard = ({ id, title, onClick }) => {
+const Address = styled.h5`
+  color: #fff;
+  font-family: 'Dosis', sans-serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+
+  ${media.phone`
+    margin-top: 0;
+    padding-top: 0;
+    word-wrap: break-word;`};
+`;
+
+const SimpleCard = ({ id, title, onClick, address }) => {
   return (
     <Card
       innerRef={card => {
@@ -42,6 +60,7 @@ const SimpleCard = ({ id, title, onClick }) => {
       to={`/${id}`}
     >
       <Title>{title}</Title>
+      <Address>{address}</Address>
     </Card>
   );
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { media } from '../../helpers/media';
 import * as placesActions from '../../redux/placesReducer';
 
 const Wrapper = styled.div`
@@ -14,14 +15,18 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: 'Dosis', sans-serif;
   letter-spacing: 3px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 10px auto;
+  padding: 10px;
   position: relative;
   text-align: center;
   width: 60%;
+
+  ${media.phone`
+    width: 95%`};
 `;
 
 const Cross = styled(Link)`
+  margin: 5px;
   &::after {
     content: '';
     height: 20px;
@@ -80,7 +85,7 @@ class Details extends React.Component {
     return (
       <Wrapper>
         <Cross to="/" onClick={this.handleClick} />
-        <Title>Smáralind</Title>
+        <Title>{name}</Title>
         <Divider />
         <div>
           <p>Mánudagar: 12:00 - 18:00</p>
@@ -92,9 +97,9 @@ class Details extends React.Component {
           <p>Mánudagar: 12:00 - 18:00</p>
         </div>
         <Divider />
-        <Info>Engihjalli 8, 200 Kópavogur</Info>
-        <Info>+354 699-3004</Info>
-        <Info>http://Website.com</Info>
+        <Info>{address}</Info>
+        <Info>{internationalPhoneNumber}</Info>
+        <Info>{website}</Info>
       </Wrapper>
     );
   }

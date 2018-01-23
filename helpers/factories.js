@@ -3,6 +3,7 @@ const suggestionsFactory = suggestion => ({
   id: suggestion.place_id,
   description: suggestion.description,
   childKey: suggestion.place_id,
+  address: suggestion.structured_formatting.secondary_text,
 });
 
 const placeFactory = place => ({

@@ -8,8 +8,10 @@ const Nav = styled.div`
   background: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
   display: flex;
+  font-family: 'Dosis', sans-serif;
   height: 80px;
   justify-content: space-between;
+  letter-spacing: 3px;
   width: 100%;
 `;
 
