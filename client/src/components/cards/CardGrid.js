@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { media } from '../../helpers/media';
-
-import TransitionGroupPlus from 'react-transition-group-plus';
 import * as searchActions from '../../redux/searchReducer';
 import * as placesActions from '../../redux/placesReducer';
 
@@ -17,41 +15,28 @@ const Grid = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: center;
-  width: 80%;
+  width: 60%;
 
   ${media.phone`
-    width: 90%;`};
-`;
-
-const NoResultsText = styled.h3`
-  color: #fff;
-  font-family: 'Dosis', sans-serif;
-  font-size: 24px;
-  letter-spacing: 3px;
+    width: 90%;
+    `};
 `;
 
 class CardGrid extends React.Component {
-  fetchPlace = id => {
-    this.props.fetchPlace(id);
+  handleOnClick = (id, e) => {
+    const { fetchPlace } = this.props;
+    fetchPlace(id);
   };
 
   render() {
     const { results } = this.props;
-    let delay = 0;
+    const { isFetching } = this.props.search;
+    console.log(this.props);
     return (
       <Grid>
-        <TransitionGroupPlus transitionMode="out-in" component={Grid}>
-          {results.length === 0
-            ? ''
-            : results.map((place, index) => (
-                <Card
-                  key={index}
-                  {...place}
-                  delay={(delay += 0.1)}
-                  fetchPlace={this.fetchPlace}
-                />
-              ))}
-        </TransitionGroupPlus>
+        {results.map(place => (
+          <Card key={place.id} {...place} onClick={this.handleOnClick} />
+        ))}
       </Grid>
     );
   }
@@ -61,6 +46,7 @@ const mapStateToProps = (state, props) => ({
   search: state.search,
   results: state.search.results,
   places: state.places,
+  app: state.app,
 });
 
 const mapDispatchToProps = (dispatch, props) =>

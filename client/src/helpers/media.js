@@ -17,6 +17,11 @@ export const media = Object.keys(sizes).reduce((acc, label) => {
   return acc;
 }, {});
 
+export const states = {
+  inactive: 'INACTIVE',
+  active: 'ACTIVE',
+};
+
 export const eases = {
   entrance: {
     animationTimingFunction: `cubic-breizer(0.39, 0.575, 0.565, 1)`,

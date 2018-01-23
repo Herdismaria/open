@@ -3,16 +3,17 @@ import {
   FETCHING_PLACE,
   FETCHING_PLACE_SUCCESS,
   FETCHING_PLACE_FAILURE,
-  SET_PLACE,
+  RESET_PLACE,
 } from './constants';
+import { resetSearch } from './searchReducer';
 
 export const fetchingPlace = () => ({
   type: FETCHING_PLACE,
 });
 
-export const fetchingPlaceSuccess = places => ({
+export const fetchingPlaceSuccess = place => ({
   type: FETCHING_PLACE_SUCCESS,
-  places,
+  place,
 });
 
 export const fetchingPlaceFailure = err => ({
@@ -20,21 +21,20 @@ export const fetchingPlaceFailure = err => ({
   err,
 });
 
-export const setPlace = result => ({
-  type: SET_PLACE,
-  result,
+export const resetPlace = () => ({
+  type: RESET_PLACE,
 });
 
-/*export const fetchPlace = id => async (dispatch, getState) => {
+export const fetchPlace = id => async (dispatch, getState) => {
   dispatch(fetchingPlace());
+  dispatch(resetSearch());
   const URI = encodeURI(`/search/places?id=${id}`);
-  console.log(URI);
   const res = await axios.get(URI);
-  //console.log(res);
-};*/
+  dispatch(fetchingPlaceSuccess(res.data));
+};
 
 const initialState = {
-  place: {},
+  place: [],
   isLoading: false,
   error: '',
 };
@@ -50,7 +50,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        places: action.places,
+        place: action.place,
       };
     case FETCHING_PLACE_FAILURE:
       return {
@@ -58,10 +58,10 @@ export default function(state = initialState, action) {
         isLoading: false,
         err: action.err,
       };
-    case SET_PLACE:
+    case RESET_PLACE:
       return {
         ...state,
-        place: action.result,
+        place: [],
       };
     default:
       return state;

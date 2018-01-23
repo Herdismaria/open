@@ -1,9 +1,10 @@
 import { TweenMax, Elastic, TimelineLite } from 'gsap';
+import { keyframes } from 'styled-components';
 
 const duration = 0.5;
 export default {
-  cardEntrance: (target, delay, cb) =>
-    TweenMax.from(target, duration, {
+  cardEntrance: (target, delay, cb) => {
+    return TweenMax.from(target, duration, {
       opacity: 0,
       x: 200,
       onComplete() {
@@ -12,7 +13,8 @@ export default {
 
       ease: Elastic.easeOut.config(0.25, 1),
       delay: delay,
-    }),
+    });
+  },
 
   cardExit: (target, delay, cb) =>
     TweenMax.to(target, duration, {
@@ -26,36 +28,9 @@ export default {
       delay: delay,
     }),
 
-  multipleCardsEntrance: (target, cb) => {
-    var tl = new TimelineLite();
-    tl.staggerFrom(
-      target,
-      0.5,
-      {
-        x: 200,
-        opacity: 0,
-      },
-      0.2
-    );
-  },
-
-  multipleCardsExit: (target, cb) => {
-    var tl = new TimelineLite();
-    tl.staggerTo(
-      target,
-      0.5,
-      {
-        x: -200,
-        opacity: 0,
-      },
-      0.2
-    );
-  },
-
-  grow: (target, delay, cb) =>
-    TweenMax.to(target, 3, {
-      height: 400,
-      width: 600,
+  slideUp: (target, delay, cb) =>
+    TweenMax.to(target, duration, {
+      y: 0,
       onComplete() {
         cb();
       },
@@ -63,11 +38,9 @@ export default {
       ease: Elastic.easeOut.config(0.25, 1),
       delay: delay,
     }),
-
-  shrink: (target, delay, cb) =>
-    TweenMax.to(target, 3, {
-      height: 100,
-      width: 300,
+  slideDown: (target, delay, cb) =>
+    TweenMax.to(target, duration, {
+      y: 200,
       onComplete() {
         cb();
       },
@@ -75,4 +48,12 @@ export default {
       ease: Elastic.easeOut.config(0.25, 1),
       delay: delay,
     }),
+  tick: keyframes`
+      0% {
+        transform: rotate(0deg)
+      }
+      100% {
+         transform: rotate(360deg)
+      }
+    `,
 };

@@ -3,15 +3,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as searchActions from '../../redux/searchReducer';
-import * as placesActions from '../../redux/placesReducer';
-import { media } from '../../helpers/media';
+import { media, states } from '../../helpers/media';
+import animations from '../../animations/animation';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 20%;
-  padding-top: 200px;
+  transform: translateY(${props => props.transY}px);
+  transition: transform 0.5s ease ${props => props.delay}s;
 `;
 
 const StyledInput = styled.input`
@@ -25,9 +26,14 @@ const StyledInput = styled.input`
   letter-spacing: 3px;
   height: 60px;
   padding: 0 20px;
+  position: relative;
   width: 60%;
   &:focus {
     outline: none;
+  }
+
+  &::placeholder {
+    color: #fff;
   }
 
   ${media.phone`
@@ -38,10 +44,10 @@ const SearchIcon = styled.span`
   color: #fff;
   font-size: 20px;
   position: absolute;
-  right: 28%;
+  right: 23%;
 
   ${media.phone`
-    right: 22%;`};
+    right: 12%;`};
 `;
 
 class Input extends React.Component {
@@ -56,14 +62,14 @@ class Input extends React.Component {
     const { updateSearchValue } = this.props;
     const value = e.target.value;
     updateSearchValue(value);
+
     this.timer = setTimeout(() => {
       this.calculateSuggestions(value);
-    }, 500);
+    }, 1000);
   };
 
   // get autocomplete suggestions, if no characters, reset state
   calculateSuggestions = value => {
-    const input = this.input;
     const { resetSearch, getResults } = this.props;
     if (value.length === 0) {
       resetSearch();
@@ -72,21 +78,19 @@ class Input extends React.Component {
     }
   };
 
-  handleResultSelect = (e, { result }) => {
-    const { updateSearchValue, setPlace, fetchPlace } = this.props;
-    updateSearchValue(result.title);
-    setPlace(result);
-    fetchPlace();
-  };
-
   render() {
+    const { results, value } = this.props.search;
+
     return (
       <Wrapper
-        innerRef={input => {
-          this.input = input;
-        }}
+        transY={results.length === 0 ? 100 : 0}
+        //delay={results.length === 0 ? 0.5 : 0}
       >
-        <StyledInput onChange={this.handleSearchChange} />
+        <StyledInput
+          onChange={this.handleSearchChange}
+          placeholder="Leitaðu að fyrirtæki"
+          value={value}
+        />
         <SearchIcon className="fa fa-search" />
       </Wrapper>
     );
@@ -95,10 +99,9 @@ class Input extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   search: state.search,
-  places: state.places,
 });
 
 const mapDispatchToProps = (dispatch, props) =>
-  bindActionCreators({ ...placesActions, ...searchActions }, dispatch);
+  bindActionCreators({ ...searchActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);

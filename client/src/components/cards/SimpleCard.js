@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import { media } from '../../helpers/media';
 import animations from '../../animations/animation';
+import ClockLoader from '../loaders/ClockLoader';
 
-const Card = styled.div`
+const Card = styled(Link)`
   background: transparent;
   box-sizing: border-box;
   border: 2px solid #fff;
@@ -12,13 +15,14 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
   flex: 0 0 60%;
-  height: ${props => props.height}px;
+  height: 100px;
   margin: 5px;
-  transition: flex-basis 0.5s;
+  text-decoration: none;
   transition: height 0.5s;
 
   ${media.phone`
-    flex: 0 0 100%;`};
+    flex: 0 0 100%;
+    height: 80px`};
 `;
 
 const Title = styled.h3`
@@ -28,45 +32,18 @@ const Title = styled.h3`
   letter-spacing: 3px;
 `;
 
-class SimpleCard extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { open: false };
-  }
-
-  componentWillEnter(cb) {
-    let el = this.card;
-    animations.cardEntrance(el, this.props.delay, cb);
-  }
-
-  componentWillLeave(cb) {
-    let el = this.card;
-    this.setState(prev => ({ open: false }));
-    animations.cardExit(el, this.props.delay, cb);
-  }
-
-  onClick = () => {
-    this.setState(prev => ({ open: !prev.open }));
-    if (!this.state.open) {
-      this.props.fetchPlace(this.props.id);
-    }
-  };
-
-  render() {
-    const { title } = this.props;
-    return (
-      <Card
-        innerRef={card => {
-          this.card = card;
-        }}
-        onClick={this.onClick}
-        height={this.state.open ? 400 : 100}
-      >
-        <Title>{title}</Title>
-      </Card>
-    );
-  }
-}
+const SimpleCard = ({ id, title, onClick }) => {
+  return (
+    <Card
+      innerRef={card => {
+        this.card = card;
+      }}
+      onClick={e => onClick(id, e)}
+      to={`/${id}`}
+    >
+      <Title>{title}</Title>
+    </Card>
+  );
+};
 
 export default SimpleCard;

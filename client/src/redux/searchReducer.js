@@ -8,7 +8,6 @@ import {
   FETCHING_PLACE,
   FETCHING_PLACE_SUCCESS,
   FETCHING_PLACE_FAILURE,
-  SET_PLACE,
 } from './constants';
 
 export const fetchingResults = () => ({
@@ -25,8 +24,9 @@ export const fetchingResultsFailure = err => ({
   err,
 });
 
-export const fetchingPlace = () => ({
+export const fetchingPlace = id => ({
   type: FETCHING_PLACE,
+  id,
 });
 
 export const fetchingPlaceSuccess = place => ({
@@ -48,25 +48,11 @@ export const resetSearch = () => ({
   type: RESET_SEARCH,
 });
 
-export const setPlace = result => ({
-  type: SET_PLACE,
-  result,
-});
-
 export const getResults = () => async (dispatch, getState) => {
   dispatch(fetchingResults());
   const URI = encodeURI(`/search/predictions?value=${getState().search.value}`);
-
   const res = await axios.get(URI);
   dispatch(fetchingResultsSuccess(res.data));
-};
-
-export const fetchPlace = id => async (dispatch, getState) => {
-  dispatch(fetchingPlace());
-
-  const URI = encodeURI(`/search/places?id=${id}`);
-  const res = await axios.get(URI);
-  dispatch(setPlace(res));
 };
 
 const initialState = {
@@ -74,8 +60,6 @@ const initialState = {
   results: [],
   value: '',
   error: '',
-  searching: false,
-  place: undefined,
 };
 
 export default function search(state = initialState, action) {
@@ -104,15 +88,10 @@ export default function search(state = initialState, action) {
         ...state,
         value: action.value,
       };
-    case FETCHING_PLACE:
-      return {
-        ...state,
-        place: undefined,
-      };
     case FETCHING_PLACE_SUCCESS:
       return {
         ...state,
-        place: action.place,
+        results: [],
       };
     case RESET_SEARCH:
       return initialState;
