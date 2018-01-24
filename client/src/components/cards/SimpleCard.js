@@ -14,7 +14,6 @@ const Card = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 60%;
   flex-direction: column;
   height: 100px;
   margin: 5px;
@@ -22,7 +21,6 @@ const Card = styled(Link)`
   transition: height 0.5s;
 
   ${media.phone`
-    flex: 0 0 100%;
     height: 90px`};
 `;
 
@@ -31,11 +29,9 @@ const Title = styled.h3`
   font-family: 'Dosis', sans-serif;
   font-size: 20px;
   letter-spacing: 3px;
-
-  ${media.phone`
-    word-wrap: break-word;
-    margin-bottom: 0;
-    padding-bottom: 0;`};
+  word-wrap: break-word;
+  margin-bottom: 0;
+  padding-bottom: 0;
 `;
 
 const Address = styled.h5`
@@ -43,11 +39,9 @@ const Address = styled.h5`
   font-family: 'Dosis', sans-serif;
   font-size: 14px;
   letter-spacing: 3px;
-
-  ${media.phone`
-    margin-top: 0;
-    padding-top: 0;
-    word-wrap: break-word;`};
+  margin-top: 0;
+  padding-top: 0;
+  word-wrap: break-word;
 `;
 
 const SimpleCard = ({ id, title, onClick, address }) => {

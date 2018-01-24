@@ -15,7 +15,7 @@ const Grid = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: center;
-  width: 60%;
+  width: 40%;
 
   ${media.phone`
     width: 90%;
