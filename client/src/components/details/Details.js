@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { media, getOpeningHours } from '../../helpers/media';
+import { media } from '../../helpers/media';
+import { getOpeningHours } from '../../helpers/openingHours';
 import * as placesActions from '../../redux/placesReducer';
 
 const Wrapper = styled.div`
@@ -99,7 +100,6 @@ const WebsiteLink = styled.a`
 
 class Details extends React.Component {
   handleClick = e => {
-    console.log(this.props);
     this.props.resetPlace();
   };
 
@@ -110,6 +110,7 @@ class Details extends React.Component {
     if (!isLoading && place.length === 0) {
       return <Redirect to="/" />;
     }
+
     const {
       address,
       internationalPhoneNumber,
