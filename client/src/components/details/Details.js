@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { media } from '../../helpers/media';
+import { media, getOpeningHours } from '../../helpers/media';
 import * as placesActions from '../../redux/placesReducer';
 
 const Wrapper = styled.div`
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: 'Dosis', sans-serif;
   letter-spacing: 3px;
-  margin: 10px auto;
+  margin: 50px auto;
   overflow: hidden;
   padding: 10px;
   position: relative;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   width: 60%;
 
   ${media.phone`
-    width: 95%`};
+    width: 80%`};
 `;
 
 const Cross = styled(Link)`
@@ -73,6 +73,14 @@ const Info = styled.p`
     font-size: 14px;`};
 `;
 
+const OpeningHours = styled.p`
+  padding: 0;
+  margin: 2px auto;
+
+  ${media.phone`
+    font-size: 14px;`};
+`;
+
 const WebsiteLink = styled.a`
   padding: 0;
   margin: 2px auto;
@@ -97,6 +105,8 @@ class Details extends React.Component {
 
   render() {
     const { isLoading, place } = this.props.place;
+
+    // if user tries to access detail page without going  through the search
     if (!isLoading && place.length === 0) {
       return <Redirect to="/" />;
     }
@@ -113,15 +123,11 @@ class Details extends React.Component {
         <Cross to="/" onClick={this.handleClick} />
         <Title>{name}</Title>
         <Divider />
-        <div>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-          <p>Mánudagar: 12:00 - 18:00</p>
-        </div>
+        {openingHours
+          ? getOpeningHours(openingHours.periods).map(e => (
+              <OpeningHours key={e}>{e}</OpeningHours>
+            ))
+          : 'Engar upplýsingar um opnunartíma fundust'}
         <Divider />
         <Info>{address}</Info>
         <Info>{internationalPhoneNumber}</Info>

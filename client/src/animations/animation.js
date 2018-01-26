@@ -1,19 +1,11 @@
-import { TweenMax, Elastic, TimelineLite } from 'gsap';
+import { TweenMax, Elastic } from 'gsap';
 import { keyframes } from 'styled-components';
 
-const duration = 0.5;
+const duration = 3;
 export default {
   cardEntrance: (target, delay, cb) => {
-    return TweenMax.from(target, duration, {
-      opacity: 0,
-      x: 200,
-      onComplete() {
-        cb();
-      },
-
-      ease: Elastic.easeOut.config(0.25, 1),
-      delay: delay,
-    });
+    console.log(delay);
+    return TweenMax.from(target, 0.3, { opacity: 0, onComplete: cb });
   },
 
   cardExit: (target, delay, cb) =>

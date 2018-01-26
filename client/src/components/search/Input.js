@@ -3,16 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as searchActions from '../../redux/searchReducer';
-import { media, states } from '../../helpers/media';
-import animations from '../../animations/animation';
+import { media } from '../../helpers/media';
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 20%;
-  transform: translateY(${props => props.transY}px);
-  transition: transform 0.5s ease ${props => props.delay}s;
+  align-items: center;
+  width: 100%;
 `;
 
 const StyledInput = styled.input`
@@ -25,7 +22,8 @@ const StyledInput = styled.input`
   font-size: 20px;
   letter-spacing: 3px;
   height: 60px;
-  padding: 0 20px;
+  margin: 20px auto;
+  padding: 20px;
   position: relative;
   width: 60%;
   &:focus {
@@ -44,10 +42,10 @@ const SearchIcon = styled.span`
   color: #fff;
   font-size: 20px;
   position: absolute;
-  right: 23%;
+  right: 22%;
 
   ${media.phone`
-    right: 12%;`};
+    right: 35px;`};
 `;
 
 class Input extends React.Component {
@@ -65,7 +63,7 @@ class Input extends React.Component {
 
     this.timer = setTimeout(() => {
       this.calculateSuggestions(value);
-    }, 1000);
+    }, 500);
   };
 
   // get autocomplete suggestions, if no characters, reset state
@@ -79,13 +77,10 @@ class Input extends React.Component {
   };
 
   render() {
-    const { results, value } = this.props.search;
+    const { value } = this.props.search;
 
     return (
-      <Wrapper
-        transY={results.length === 0 ? 100 : 0}
-        //delay={results.length === 0 ? 0.5 : 0}
-      >
+      <Wrapper>
         <StyledInput
           onChange={this.handleSearchChange}
           placeholder="Leitaðu að fyrirtæki"

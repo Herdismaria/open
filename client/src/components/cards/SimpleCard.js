@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
 import { media } from '../../helpers/media';
-import animations from '../../animations/animation';
-import ClockLoader from '../loaders/ClockLoader';
 
 const Card = styled(Link)`
   background: transparent;
@@ -32,6 +29,9 @@ const Title = styled.h3`
   word-wrap: break-word;
   margin-bottom: 0;
   padding-bottom: 0;
+
+  ${media.phone`
+    font-size: 16px;`};
 `;
 
 const Address = styled.h5`
@@ -42,21 +42,27 @@ const Address = styled.h5`
   margin-top: 0;
   padding-top: 0;
   word-wrap: break-word;
+
+  ${media.phone`
+    font-size: 12px;`};
 `;
 
-const SimpleCard = ({ id, title, onClick, address }) => {
-  return (
-    <Card
-      innerRef={card => {
-        this.card = card;
-      }}
-      onClick={e => onClick(id, e)}
-      to={`/${id}`}
-    >
-      <Title>{title}</Title>
-      <Address>{address}</Address>
-    </Card>
-  );
-};
+class SimpleCard extends React.Component {
+  render() {
+    const { id, title, onClick, address } = this.props;
+    return (
+      <Card
+        innerRef={card => {
+          this.card = card;
+        }}
+        onClick={e => onClick(id, e)}
+        to={`/${id}`}
+      >
+        <Title>{title.split('-').join('\n')}</Title>
+        <Address>{address}</Address>
+      </Card>
+    );
+  }
+}
 
 export default SimpleCard;

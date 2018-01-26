@@ -15,11 +15,23 @@ const Grid = styled.div`
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: center;
-  width: 40%;
+  width: 60%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
 
   ${media.phone`
     width: 90%;
     `};
+`;
+
+const NoResultText = styled.h4`
+  color: #fff;
+  font-family: 'Dosis', sans-serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin: 0 auto;
+  padding: 50px;
 `;
 
 class CardGrid extends React.Component {
@@ -30,13 +42,21 @@ class CardGrid extends React.Component {
 
   render() {
     const { results } = this.props;
-    const { isFetching } = this.props.search;
-    console.log(this.props);
+    let delay = 0;
     return (
       <Grid>
-        {results.map(place => (
-          <Card key={place.id} {...place} onClick={this.handleOnClick} />
-        ))}
+        {results.length === 0 ? (
+          <NoResultText>Engar niðurstöður fundust...</NoResultText>
+        ) : (
+          results.map(place => (
+            <Card
+              key={place.id}
+              {...place}
+              onClick={this.handleOnClick}
+              delay={(delay += 0.1)}
+            />
+          ))
+        )}
       </Grid>
     );
   }
