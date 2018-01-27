@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 `;
 
 const Cross = styled(Link)`
-  margin: 10px;
+  padding: 15px;
   &::after {
     content: '';
     height: 20px;
@@ -88,19 +88,32 @@ const OpeningHoursWrapper = styled.div`
 `;
 
 const WebsiteLink = styled.a`
-  padding: 0;
-  margin: 2px auto;
-  text-decoration: none;
   color: #fff;
   cursor: pointer;
+  margin: 2px auto;
+  padding: 0;
+  text-decoration: none;
 
   &:hover {
-    text-decoration: none;
     color: #fff;
+    text-decoration: none;
   }
 
   ${media.phone`
     font-size: 14px;`};
+`;
+
+const StatusLabel = styled.p`
+  border: 2px solid;
+  border-color: ${props => (props.open ? 'green' : 'red')};
+  border-radius: 10px;
+  color: ${props => (props.open ? 'green' : 'red')};
+  font-size: 10px;
+  margin: 0 auto;
+  padding: 4px;
+  font-size: 10px;
+  text-align: center;
+  width: 40px;
 `;
 
 class Details extends React.Component {
@@ -128,6 +141,9 @@ class Details extends React.Component {
         <Wrapper>
           <Cross to="/" onClick={this.handleClick} />
           <Title>{name}</Title>
+          <StatusLabel open={openingHours['open_now']}>
+            {openingHours['open_now'] ? 'Opið' : 'lokað'}
+          </StatusLabel>
           <Divider />
           <OpeningHoursWrapper>
             {openingHours
