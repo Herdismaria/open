@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   width: 80%;
   margin: 20px auto;
   transform: translateY(${props => props.transY}px);
-  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: transform 0.7s cubic-bezier(0.86, 0, 0.07, 1);
 
   ${media.phone`
     width: 95%;

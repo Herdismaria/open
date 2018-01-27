@@ -8,18 +8,16 @@ const days = [
   'Laugardagar',
 ];
 
-const createTimeStrings = item => {
-  return {
-    day: item.open.day,
-    time: `${item.open.time
-      .split('')
-      .reduce(addColon, [])
-      .join('')} - ${item.close.time
-      .split('')
-      .reduce(addColon, [])
-      .join('')}`,
-  };
-};
+const createTimeStrings = item => ({
+  day: item.open.day,
+  time: `${item.open.time
+    .split('')
+    .reduce(addColon, [])
+    .join('')} - ${item.close.time
+    .split('')
+    .reduce(addColon, [])
+    .join('')}`,
+});
 
 const addColon = (acc, curr, index) =>
   index === 2 ? [...acc, ':', curr] : [...acc, curr];

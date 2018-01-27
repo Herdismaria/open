@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { media } from '../../helpers/media';
 import { getOpeningHours } from '../../helpers/openingHours';
 import * as placesActions from '../../redux/placesReducer';
+import ErrorBoundary from '../error/ErrorBoundary';
 
 const Wrapper = styled.div`
   align-items: space-between;
@@ -74,12 +75,16 @@ const Info = styled.p`
     font-size: 14px;`};
 `;
 
-const OpeningHours = styled.p`
+const OpeningHoursText = styled.p`
   padding: 0;
-  margin: 2px auto;
+  margin: 5px auto;
 
   ${media.phone`
     font-size: 14px;`};
+`;
+
+const OpeningHoursWrapper = styled.div`
+  margin: 10px auto;
 `;
 
 const WebsiteLink = styled.a`
@@ -105,7 +110,6 @@ class Details extends React.Component {
 
   render() {
     const { isLoading, place } = this.props.place;
-
     // if user tries to access detail page without going  through the search
     if (!isLoading && place.length === 0) {
       return <Redirect to="/" />;
@@ -119,21 +123,26 @@ class Details extends React.Component {
       openingHours,
     } = this.props.place.place;
 
-    return (
-      <Wrapper>
-        <Cross to="/" onClick={this.handleClick} />
-        <Title>{name}</Title>
-        <Divider />
-        {openingHours
-          ? getOpeningHours(openingHours.periods).map(e => (
-              <OpeningHours key={e}>{e}</OpeningHours>
-            ))
-          : 'Engar upplýsingar um opnunartíma fundust'}
-        <Divider />
-        <Info>{address}</Info>
-        <Info>{internationalPhoneNumber}</Info>
-        <WebsiteLink href={website}>{website}</WebsiteLink>
-      </Wrapper>
+    return isLoading ? null : (
+      <ErrorBoundary>
+        <Wrapper>
+          <Cross to="/" onClick={this.handleClick} />
+          <Title>{name}</Title>
+          <Divider />
+          <OpeningHoursWrapper>
+            {openingHours
+              ? getOpeningHours(openingHours.periods).map(e => (
+                  <OpeningHoursText key={e}>{e}</OpeningHoursText>
+                ))
+              : 'Engar upplýsingar um opnunartíma fundust'}
+          </OpeningHoursWrapper>
+
+          <Divider />
+          <Info>{address}</Info>
+          <Info>{internationalPhoneNumber}</Info>
+          <WebsiteLink href={website}>{website}</WebsiteLink>
+        </Wrapper>
+      </ErrorBoundary>
     );
   }
 }

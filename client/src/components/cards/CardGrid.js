@@ -42,10 +42,11 @@ class CardGrid extends React.Component {
 
   render() {
     const { results } = this.props;
+    const { isSearching } = this.props.search;
     let delay = 0;
     return (
       <Grid>
-        {results.length === 0 ? (
+        {results.length === 0 && !isSearching ? (
           <NoResultText>Engar niðurstöður fundust...</NoResultText>
         ) : (
           results.map(place => (
@@ -66,7 +67,6 @@ const mapStateToProps = (state, props) => ({
   search: state.search,
   results: state.search.results,
   places: state.places,
-  app: state.app,
 });
 
 const mapDispatchToProps = (dispatch, props) =>

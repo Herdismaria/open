@@ -60,6 +60,7 @@ const initialState = {
   results: [],
   value: '',
   error: '',
+  isSearching: false,
 };
 
 export default function search(state = initialState, action) {
@@ -74,6 +75,7 @@ export default function search(state = initialState, action) {
         ...state,
         isLoading: false,
         error: action.err,
+        isSearching: false,
       };
     case FETCHING_RESULTS_SUCCESS:
       return {
@@ -82,11 +84,13 @@ export default function search(state = initialState, action) {
         error: '',
         results: action.results,
         fetched: true,
+        isSearching: false,
       };
     case UPDATE_SEARCH_VALUE:
       return {
         ...state,
         value: action.value,
+        isSearching: true,
       };
     case FETCHING_PLACE_SUCCESS:
       return {
