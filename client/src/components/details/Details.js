@@ -136,14 +136,16 @@ class Details extends React.Component {
       openingHours,
     } = this.props.place.place;
 
+    const status = openingHours ? openingHours['open_now'] : undefined;
+
     return isLoading ? null : (
       <ErrorBoundary>
         <Wrapper>
           <Cross to="/" onClick={this.handleClick} />
           <Title>{name}</Title>
-          <StatusLabel open={openingHours['open_now']}>
-            {openingHours['open_now'] ? 'Opið' : 'lokað'}
-          </StatusLabel>
+          {openingHours ? (
+            <StatusLabel open={status}>{status ? 'Opið' : 'lokað'}</StatusLabel>
+          ) : null}
           <Divider />
           <OpeningHoursWrapper>
             {openingHours
