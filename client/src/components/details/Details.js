@@ -87,7 +87,7 @@ const OpeningHoursWrapper = styled.div`
   margin: 10px auto;
 `;
 
-const WebsiteLink = styled.a`
+const InfoLink = styled.a`
   color: #fff;
   cursor: pointer;
   margin: 2px auto;
@@ -123,6 +123,7 @@ class Details extends React.Component {
 
   render() {
     const { isLoading, place } = this.props.place;
+
     // if user tries to access detail page without going  through the search
     if (!isLoading && place.length === 0) {
       return <Redirect to="/" />;
@@ -157,8 +158,10 @@ class Details extends React.Component {
 
           <Divider />
           <Info>{address}</Info>
-          <Info>{internationalPhoneNumber}</Info>
-          <WebsiteLink href={website}>{website}</WebsiteLink>
+          <InfoLink href={`tel:${internationalPhoneNumber}`}>
+            {internationalPhoneNumber}
+          </InfoLink>
+          <InfoLink href={website}>{website}</InfoLink>
         </Wrapper>
       </ErrorBoundary>
     );

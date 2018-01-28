@@ -25,7 +25,7 @@ const addColon = (acc, curr, index) =>
 const getHoursbyDay = (acc, curr) => {
   let time = acc[curr.day];
   let newTime = [...time, curr.time];
-  return Object.assign([], acc, { [curr.day]: newTime });
+  return [...acc.slice(0, curr.day), newTime, ...acc.slice(curr.day + 1)];
 };
 
 export const getOpeningHours = periods => {

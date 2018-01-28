@@ -53,6 +53,10 @@ class Input extends React.Component {
     this.timer = null;
   }
 
+  componentDidMount() {
+    this.input.focus();
+  }
+
   // set timeout so that http request is only sent when the user has stopped writing
   handleSearchChange = e => {
     clearTimeout(this.timer);
@@ -85,6 +89,7 @@ class Input extends React.Component {
           onChange={this.handleSearchChange}
           placeholder="Leitaðu að fyrirtæki"
           value={value}
+          innerRef={input => (this.input = input)}
         />
         <SearchIcon className="fa fa-search" />
       </Wrapper>
