@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { media } from '../../helpers/media';
+import animations from '../../animations/animation';
 
+const Wrapper = styled.div``;
 const Card = styled(Link)`
   background: transparent;
   box-sizing: border-box;
@@ -15,7 +17,7 @@ const Card = styled(Link)`
   height: 100px;
   margin: 5px;
   text-decoration: none;
-  transition: height 0.5s;
+  opacity: 1;
 
   ${media.phone`
     height: 90px`};
@@ -48,19 +50,29 @@ const Address = styled.h5`
 `;
 
 class SimpleCard extends React.Component {
+  componentWillEnter(cb) {
+    let el = this.card;
+    animations.cardEntrance(el, this.props.delay, cb);
+  }
+
+  componentWillLeave(cb) {
+    let el = this.card;
+    animations.cardExit(el, this.props.delay, cb);
+  }
+
   render() {
     const { id, title, onClick, address } = this.props;
     return (
-      <Card
+      <Wrapper
         innerRef={card => {
           this.card = card;
         }}
-        onClick={e => onClick(id, e)}
-        to={`/${id}`}
       >
-        <Title>{title.split('-').join('\n')}</Title>
-        <Address>{address}</Address>
-      </Card>
+        <Card onClick={e => onClick(id, e)} to={`/${id}`}>
+          <Title>{title.split('-').join('\n')}</Title>
+          <Address>{address}</Address>
+        </Card>
+      </Wrapper>
     );
   }
 }

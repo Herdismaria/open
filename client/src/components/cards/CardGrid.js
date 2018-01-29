@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { media } from '../../helpers/media';
 import * as searchActions from '../../redux/searchReducer';
 import * as placesActions from '../../redux/placesReducer';
+import TransitionGroupPlus from 'react-transition-group-plus';
 
 import Card from './SimpleCard';
 
@@ -49,14 +50,16 @@ class CardGrid extends React.Component {
         {results.length === 0 && !isSearching ? (
           <NoResultText>Engar niðurstöður fundust...</NoResultText>
         ) : (
-          results.map(place => (
-            <Card
-              key={place.id}
-              {...place}
-              onClick={this.handleOnClick}
-              delay={(delay += 0.1)}
-            />
-          ))
+          <TransitionGroupPlus>
+            {results.map(place => (
+              <Card
+                key={place.id}
+                {...place}
+                onClick={this.handleOnClick}
+                delay={(delay += 0.1)}
+              />
+            ))}
+          </TransitionGroupPlus>
         )}
       </Grid>
     );

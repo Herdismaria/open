@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import animations from '../../animations/animation';
 
+const Wrapper = styled.div`
+  height: 100px;
+  width: 100px;
+`;
+
 const Clock = styled.div`
   border: 4px solid #48c0d3;
   border-radius: 60px;
