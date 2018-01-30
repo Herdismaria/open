@@ -28,6 +28,12 @@ const StyledInput = styled.input`
   margin: 20px auto;
   padding: 20px;
   width: 100%;
+
+  ${media.phone`
+    font-size: 14px;
+    height: 50px;
+  `};
+
   &:focus {
     outline: none;
   }
@@ -44,6 +50,11 @@ const SearchIcon = styled.span`
   top: 40px;
   right: 30px;
   font-size: 20px;
+
+  ${media.phone`
+    font-size: 18px;
+    top: 35px;
+  `};
 `;
 
 class Input extends React.Component {
