@@ -21,7 +21,7 @@ class Home extends React.Component {
   render() {
     const { value } = this.props.search;
     return (
-      <Wrapper transY={value.length === 0 ? 200 : 0}>
+      <Wrapper transY={value.length === 0 ? 150 : 0}>
         <Input />
         {value.length > 0 ? <CardGrid /> : null}
       </Wrapper>

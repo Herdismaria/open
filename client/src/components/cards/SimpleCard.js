@@ -20,7 +20,7 @@ const Card = styled(Link)`
   opacity: 1;
 
   ${media.phone`
-    height: 90px`};
+    height: 60px`};
 `;
 
 const Title = styled.h3`
@@ -33,7 +33,7 @@ const Title = styled.h3`
   padding-bottom: 0;
 
   ${media.phone`
-    font-size: 16px;`};
+    font-size: 12px;`};
 `;
 
 const Address = styled.h5`
@@ -46,7 +46,7 @@ const Address = styled.h5`
   word-wrap: break-word;
 
   ${media.phone`
-    font-size: 12px;`};
+    font-size: 8px;`};
 `;
 
 class SimpleCard extends React.Component {
