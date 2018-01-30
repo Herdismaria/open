@@ -5,11 +5,14 @@ import styled from 'styled-components';
 import * as searchActions from '../../redux/searchReducer';
 import { media } from '../../helpers/media';
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+const InputWrapper = styled.div`
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+
+  ${media.phone`
+    width: 90%;
+  `};
 `;
 
 const StyledInput = styled.input`
@@ -24,8 +27,7 @@ const StyledInput = styled.input`
   height: 60px;
   margin: 20px auto;
   padding: 20px;
-  position: relative;
-  width: 60%;
+  width: 100%;
   &:focus {
     outline: none;
   }
@@ -33,19 +35,15 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #fff;
   }
-
-  ${media.phone`
-    width: 90%;`};
 `;
 
 const SearchIcon = styled.span`
   color: #fff;
   font-size: 20px;
   position: absolute;
-  right: 22%;
-
-  ${media.phone`
-    right: 35px;`};
+  top: 40px;
+  right: 30px;
+  font-size: 20px;
 `;
 
 class Input extends React.Component {
@@ -84,7 +82,7 @@ class Input extends React.Component {
     const { value } = this.props.search;
 
     return (
-      <Wrapper>
+      <InputWrapper>
         <StyledInput
           onChange={this.handleSearchChange}
           placeholder="Leitaðu að fyrirtæki"
@@ -92,7 +90,7 @@ class Input extends React.Component {
           innerRef={input => (this.input = input)}
         />
         <SearchIcon className="fa fa-search" />
-      </Wrapper>
+      </InputWrapper>
     );
   }
 }

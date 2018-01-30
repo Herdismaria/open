@@ -46,22 +46,20 @@ class CardGrid extends React.Component {
     const { isSearching } = this.props.search;
     let delay = 0;
     return (
-      <Grid>
+      <TransitionGroupPlus transitionMode="out-in" component={Grid}>
         {results.length === 0 && !isSearching ? (
           <NoResultText>Engar niðurstöður fundust...</NoResultText>
         ) : (
-          <TransitionGroupPlus>
-            {results.map(place => (
-              <Card
-                key={place.id}
-                {...place}
-                onClick={this.handleOnClick}
-                delay={(delay += 0.1)}
-              />
-            ))}
-          </TransitionGroupPlus>
+          results.map(place => (
+            <Card
+              key={place.id}
+              {...place}
+              onClick={this.handleOnClick}
+              delay={(delay += 0.1)}
+            />
+          ))
         )}
-      </Grid>
+      </TransitionGroupPlus>
     );
   }
 }
