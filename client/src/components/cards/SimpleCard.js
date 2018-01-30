@@ -46,7 +46,7 @@ const Address = styled.h5`
   word-wrap: break-word;
 
   ${media.phone`
-    font-size: 8px;`};
+    font-size: 10px;`};
 `;
 
 class SimpleCard extends React.Component {
