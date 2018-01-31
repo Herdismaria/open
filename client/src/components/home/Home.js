@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 
   ${media.phone`
     width: 95%;
+    transform: translateY(${props => props.transY - 30}px);
   `};
 `;
 
