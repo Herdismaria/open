@@ -8,16 +8,21 @@ import { getOpeningHours } from '../../helpers/openingHours';
 import * as placesActions from '../../redux/placesReducer';
 import ErrorBoundary from '../error/ErrorBoundary';
 
+const Detail = styled.div`
+  height: 100%;
+  width: 80%;
+  margin: 20px auto;
+
+  ${media.phone`
+  width: 95%;
+`};
+`;
+
 const Wrapper = styled.div`
   align-items: space-between;
   color: #fff;
   border: 3px solid #fff;
   border-radius: 36px;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -moz-flex;
-  display: -webkit-flex;
   display: flex;
   flex-direction: column;
   font-family: 'Dosis', sans-serif;
@@ -35,6 +40,7 @@ const Wrapper = styled.div`
 
 const Cross = styled(Link)`
   padding: 15px;
+
   &::after {
     content: '';
     height: 20px;
@@ -146,28 +152,32 @@ class Details extends React.Component {
 
     return isLoading ? null : (
       <ErrorBoundary>
-        <Wrapper>
-          <Cross to="/" onClick={this.handleClick} />
-          <Title>{name}</Title>
-          {openingHours ? (
-            <StatusLabel open={status}>{status ? 'Opið' : 'lokað'}</StatusLabel>
-          ) : null}
-          <Divider />
-          <OpeningHoursWrapper>
-            {openingHours
-              ? getOpeningHours(openingHours.periods).map(e => (
-                  <OpeningHoursText key={e}>{e}</OpeningHoursText>
-                ))
-              : 'Engar upplýsingar um opnunartíma fundust'}
-          </OpeningHoursWrapper>
+        <Detail>
+          <Wrapper>
+            <Cross to="/" onClick={this.handleClick} />
+            <Title>{name}</Title>
+            {openingHours ? (
+              <StatusLabel open={status}>
+                {status ? 'Opið' : 'lokað'}
+              </StatusLabel>
+            ) : null}
+            <Divider />
+            <OpeningHoursWrapper>
+              {openingHours
+                ? getOpeningHours(openingHours.periods).map(e => (
+                    <OpeningHoursText key={e}>{e}</OpeningHoursText>
+                  ))
+                : 'Engar upplýsingar um opnunartíma fundust'}
+            </OpeningHoursWrapper>
 
-          <Divider />
-          <Info>{address}</Info>
-          <InfoLink href={`tel:${internationalPhoneNumber}`}>
-            {internationalPhoneNumber}
-          </InfoLink>
-          <InfoLink href={website}>{website}</InfoLink>
-        </Wrapper>
+            <Divider />
+            <Info>{address}</Info>
+            <InfoLink href={`tel:${internationalPhoneNumber}`}>
+              {internationalPhoneNumber}
+            </InfoLink>
+            <InfoLink href={website}>{website}</InfoLink>
+          </Wrapper>
+        </Detail>
       </ErrorBoundary>
     );
   }
