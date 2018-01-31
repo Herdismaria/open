@@ -13,6 +13,11 @@ const Wrapper = styled.div`
   color: #fff;
   border: 3px solid #fff;
   border-radius: 36px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
   display: flex;
   flex-direction: column;
   font-family: 'Dosis', sans-serif;
